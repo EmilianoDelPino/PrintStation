@@ -1,0 +1,16 @@
+{
+  "cmake.configureOnOpen": true,
+  "cmake.useCMakePresets": "always",
+  "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+  "files.associations": { "*.qml": "qml" },
+
+  // Qt de Homebrew no está en una ruta estándar (~/Qt), así que la extensión de Qt no
+  // lo encuentra sola. Sin esto, el QML Language Server no sabe dónde están QtQuick,
+  // QtQuick.Controls, etc., y marca "Failed to import" en cascada.
+  "qt-core.additionalQtPaths": ["/opt/homebrew/opt/qt/bin/qtpaths"],
+  "qt-qml.qmlls.customExePath": "/opt/homebrew/opt/qt/bin/qmlls",
+  // -b = directorio de build. Ahí el build deja el .qmltypes con los tipos C++ del
+  // módulo (PrinterViewModel, JobQueueModel) y el mapa qml/*.qml -> módulo PrintStation.
+  // Sin esto: "PrinterViewModel was not found". Hay que compilar al menos una vez.
+  "qt-qml.qmlls.customArgs": ["-b${workspaceFolder}/build/debug"]
+}
